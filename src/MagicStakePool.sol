@@ -36,6 +36,8 @@ contract MagicStakePool {
     ERC20 public magicToken;
     AtlasMine public atlasMine;
 
+    address public owner;
+
     mapping (uint256 => address) public depositIdToUser;
     uint256 public currentDepositId;
 
@@ -44,6 +46,7 @@ contract MagicStakePool {
     constructor(ERC20 _magicToken, AtlasMine _atlasMine) {
         magicToken = _magicToken;
         atlasMine = _atlasMine;
+        owner = msg.sender;
     }
 
     function deposit(uint256 _amount) external {
@@ -74,5 +77,12 @@ contract MagicStakePool {
 
         // Remove deposit record
         delete depositIdToUser[_depositId]; 
+    }
+
+    function changeOwner(address _newOwner) external {
+        require(msg.sender == owner, "Only the owner can call this function.");
+        require(_newOwner != address(0), "Cannot have empty owner.");
+
+        owner = _newOwner;
     }
 }

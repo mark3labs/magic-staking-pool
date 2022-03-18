@@ -14,7 +14,7 @@ contract MagicStakePoolTest is BaseTest {
 
     function setUp() public {
         pool = new MagicStakePool(ERC20(MAGIC_TOKEN), AtlasMine(ATLAS_MINE));
-        vm.startPrank(MAGIC_WHALE);
+        vm.startPrank(MAGIC_WHALE); // Pretend to be a $MAGIC Whale 🐳
     }
 
     function testUserCanDeposit() public {
@@ -45,5 +45,17 @@ contract MagicStakePoolTest is BaseTest {
 
         uint256 depositId = pool.currentDepositId();
         pool.withdraw(depositId);
+    }
+
+    function testCanChangeOwner() public {
+        assertEq(address(this), pool.owner());
+        vm.prank(address(this));
+        pool.changeOwner(address(123));
+        assertEq(address(123), pool.owner());
+    }
+
+    function testFailChangeOwnerByNonOwner() public {
+        vm.prank(address(123));
+        pool.changeOwner(address(123));
     }
 }
