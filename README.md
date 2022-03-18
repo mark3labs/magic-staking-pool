@@ -1,26 +1,38 @@
-# Foundry template
+# $MAGIC Pooled Staking ✨
 
-This is a template for a Foundry project.
+Solidity smart contract for pooled staking in the Bridgeworld Atlas Mine contract
 
-## Installation
+## Getting Started
 
-To install with [DappTools](https://github.com/dapphub/dapptools):
+### Step 1: Install Rust
+Follow the instructions for your system [here](https://www.rust-lang.org/learn/get-started).
 
+### Step 2: Install [Foundry](https://github.com/gakonst/foundry)
+
+Run the following commands:
+```bash
+curl -L https://foundry.paradigm.xyz | bash
 ```
-dapp install [user]/[repo]
+```bash
+foundryup
 ```
 
-To install with [Foundry](https://github.com/gakonst/foundry):
+### Step 3: Install Dependencies
 
+From the root directory of this repo run the following command:
 ```
-forge install [user]/[repo]
+forge install
 ```
+
+### Setp 4: Setup Config
+
+Copy `.env.example` to `.env` and fill in the missing RPC_URL with an RPC endpoint for Arbitrum. You can get one for free from [Alchemy](https://alchemyapi.io)
 
 ## Local development
 
 This project uses [Foundry](https://github.com/gakonst/foundry) as the development framework.
 
-### Dependencies
+### Updating Dependencies
 
 ```
 make update
