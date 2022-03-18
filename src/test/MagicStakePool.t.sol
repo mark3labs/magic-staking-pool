@@ -33,8 +33,22 @@ contract MagicStakePoolTest is BaseTest {
         pool.deposit(100 ether);
         
         uint256 depositId = pool.currentDepositId();
-
         pool.withdraw(depositId);
+        vm.stopPrank();
+    }
+
+    function testUserCanWithdrawAfterTwoWeeks() public {
+        vm.startPrank(0x7B660FBafdADF78aB7bfe83475841712ae774066); 
+        ERC20 magic = ERC20(MAGIC_TOKEN);
+        uint256 atlasStartingBalance = magic.balanceOf(ATLAS_MINE);
+        magic.approve(address(pool), 100 ether);
+        pool.deposit(100 ether);
+        
+        vm.warp(block.timestamp + 2 weeks);
+
+        uint256 depositId = pool.currentDepositId();
+        pool.withdraw(depositId);
+
         vm.stopPrank();
     }
 }
