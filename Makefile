@@ -7,7 +7,7 @@ update:; forge update
 
 # Build & test
 build  :; forge build
-test   :; forge test
+test   :; forge test -f ${RPC_URL} --fork-block-number ${BLOCK_NUMBER}
 trace   :; forge test -vvv
 clean  :; forge clean
 snapshot :; forge snapshot

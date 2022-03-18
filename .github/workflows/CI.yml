@@ -21,3 +21,6 @@ jobs:
 
       - name: Run tests
         run: FOUNDRY_PROFILE=ci make test
+        env:
+          RPC_URL: ${{ secrets.RPC_URL }}
+          BLOCK_NUMBER: ${{ secrets.BLOCK_NUMBER }}
