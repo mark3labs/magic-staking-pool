@@ -27,7 +27,6 @@ contract MagicStakePoolTest is BaseTest {
 
     function testFailWithdrawBeforeMaturity() public {
         ERC20 magic = ERC20(MAGIC_TOKEN);
-        uint256 atlasStartingBalance = magic.balanceOf(ATLAS_MINE);
         magic.approve(address(pool), 100 ether);
         pool.deposit(100 ether);
         
@@ -37,7 +36,6 @@ contract MagicStakePoolTest is BaseTest {
 
     function testUserCanWithdrawAfterTwoWeeks() public {
         ERC20 magic = ERC20(MAGIC_TOKEN);
-        uint256 atlasStartingBalance = magic.balanceOf(ATLAS_MINE);
         magic.approve(address(pool), 100 ether);
         pool.deposit(100 ether);
         
@@ -49,12 +47,14 @@ contract MagicStakePoolTest is BaseTest {
 
     function testCanChangeOwner() public {
         assertEq(address(this), pool.owner());
+        vm.stopPrank();
         vm.prank(address(this));
         pool.changeOwner(address(123));
         assertEq(address(123), pool.owner());
     }
 
     function testFailChangeOwnerByNonOwner() public {
+        vm.stopPrank();
         vm.prank(address(123));
         pool.changeOwner(address(123));
     }
