@@ -41,7 +41,8 @@ contract MagicStakePool {
     mapping (uint256 => address) public depositIdToUser;
     uint256 public currentDepositId;
 
-    event Deposit(address indexed user, uint256 indexed index, uint256 amount, Lock lock);
+    event Deposit(address indexed user, uint256 indexed index, uint256 amount);
+    event Withdrawal(address indexed user, uint256 indexed index, uint256 amount);
 
     constructor(ERC20 _magicToken, AtlasMine _atlasMine) {
         magicToken = _magicToken;
@@ -61,7 +62,7 @@ contract MagicStakePool {
         uint256 depositId = atlasMine.currentId(address(this));
         depositIdToUser[depositId] = msg.sender;
         currentDepositId = depositId;
-        emit Deposit(msg.sender, depositId, _amount, Lock.twoWeeks);
+        emit Deposit(msg.sender, depositId, _amount);
     }
 
     function withdraw(uint256 _depositId) external {
@@ -76,7 +77,9 @@ contract MagicStakePool {
         magicToken.transfer(msg.sender, harvestedMagicBalance);
 
         // Remove deposit record
-        delete depositIdToUser[_depositId]; 
+        delete depositIdToUser[_depositId];
+
+        emit Withdrawal(msg.sender, _depositId, harvestedMagicBalance);
     }
 
     function changeOwner(address _newOwner) external {
